@@ -1,0 +1,99 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+     <package name="com.hengshuo.chengszj.action.user" extends="json-default">
+        <!-- 
+        	<global-results>
+    		<result name="error">/error.jsp</result>
+    	</global-results>
+    	
+		 <global-exception-mappings>
+    		<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+    	</global-exception-mappings>
+         -->
+     <!--  <default-action-ref name="login-llo">
+     </default-action-ref>
+     	<action name="login-llo" class="loginAction" method="llogin">
+      		  <result name="ok">/te.jsp</result>
+    
+      	</action> -->
+     
+       <!--   	<action name="login-lo" class="userAction" method="login">
+      		  <result name="ok">/web/Admin/AdminUI.jsp</result>
+      		  <result name="errorq">/index.jsp</result>
+      	</action> -->
+      	<!-- 会员管理 -->
+      	<action name="findAllUser" class="userAction" method="findAllUser">
+      		  <result name="OK">/web/admin/user/listuser.jsp</result>
+      		  <result name="Y">/web/admin/user/listJieDanUser.jsp</result>
+      	</action>
+      	
+      	<!-- 会员详细页面 -->
+      	<action name="UserDetail" class="userAction" method="findUserDetail">
+      		  <result name="OK">/web/admin/user/UserDetail.jsp</result>
+      		  <result name="D">/web/admin/dingdan/UserDetail.jsp</result>
+      	</action>
+      	<!-- 修改会员信息 -->
+      	<action name="updateUser" class="userAction" method="updateUser">
+      		  <result name="OK" type="chain">findAllUser</result>
+      	</action>
+      	
+      	
+      	<action name="findkuaidi" class="userAction" method="findkuaidi">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+    	<action name="verifycode" class="userAction" method="verifycode">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      		
+    	<action name="register" class="userAction" method="Register">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      	<action name="findMiMa" class="userAction" method="zhaohuimima">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      		<action name="updateMiMa" class="userAction" method="dengRuMiMa">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      	<action name="login" class="userAction" method="login">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      	
+      		<action name="myMessage" class="userAction" method="myMessage">
+      		  <result name="OK">/web/User/listMessage.jsp</result>
+      	</action> 
+      	
+      		<action name="xiuGaiTouXian" class="userAction" method="updateTouXian">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      	
+      		<action name="xiuGaiNiChen" class="userAction" method="updateNiChen">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      		<action name="xiuGaiQianM" class="userAction" method="updateQianmin">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      		<action name="xiuGaiZhiye" class="userAction" method="updateZhiye">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+     
+      	
+      		<action name="myJiFeng" class="userAction" method="jiFeng">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      	
+      		<action name="tixiangmima" class="userAction" method="tiXiangMiMa">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      		<action name="findWeiZhi" class="userAction" method="findWeiZhi">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      		<action name="xiugaiweizhi" class="userAction" method="updateWeiZhi">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+        
+        
+        
+     </package>
+ </struts>

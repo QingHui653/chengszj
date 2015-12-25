@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+<style type="text/css">
+@media screen and (max-width: 600px) {
+	.class {
+		background: #ccc;
+	}
+	@media screen and (min-width: 900px) {
+		.class {
+			background: #666;
+		}
+	}
+	@media screen and (max-device-width: 480px) {
+		.class {
+			background: #000;
+		}
+	}
+}
+</style>
+</head>
+
+<body>
+	<img src="down.jpg"  usemap="#afag">
+	<map name="afag">
+
+		<area shape="rect" coords="779,597,1005,663" href="#">
+		<area shape="rect" coords="1088,600,1311,663"href="#">
+	</map>
+
+</body>
+
+</html>

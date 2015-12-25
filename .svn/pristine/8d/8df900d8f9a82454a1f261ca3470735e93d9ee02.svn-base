@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+</style>
+</head>
+
+<body>    
+<!--     <div class="anquan" style="font-size: 14px;line-height: 22px;">
+	<h2 align="center">人人参与，玩转同城</h2>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人人参与，玩转同城；百托是一款互帮互助的应用平台；发订单、发任务、自由接单；交友、互助、爱心传递；让您的生活更多姿；个性生活主张，随心所欲；在线发单，代购，快捷、方便、安全，一键搞定。
+功能描述：
+1、手机号码快速注册，10秒后便可在线智能寄件；
+2、在线申请兼职自由接单人资格，审核通过便可同步接收身边的订单；
+3、根据自己的行程，自主选择周边订单，及时取货，随程携带；
+4、人人参与，重磅来袭；
+5、社区发行程，让发货人主动找到您；
+6、全程投保，订单全程冻结货物等值金额，在线订单实时跟踪；
+7、在线电子签收、电子结算，数据信息历史保存；
+8、费用及违禁寄品查询；
+9、在线聊天，即时发送语音、图片和文字信息，轻松惬意。
+
+	</div> -->
+	<table width="100%">
+		<tr><td style="font-size: 20px; text-align: center;">人人参与，玩转同城</td></tr>
+		<tr><td style="font-size: 16px; padding-top: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人人参与，玩转同城；百托是一款互帮互助的应用平台；发订单、发任务、自由接单；；交友、互助、爱心传递；让您的生活更多姿；个性生活主张，随心所欲；在线发单，代购，快捷、方便、安全，一键搞定。
+		</td></tr>
+		<tr><td style="font-size: 16px; padding-top: 5px;">功能描述：</td></tr>
+		<tr><td style="font-size: 16px; padding-top: 5px; line-height: 25px">
+1、手机号码快速注册，10秒后便可在线智能寄件；
+</br>2、在线申请兼职自由接单人资格，审核通过便可同步接收身边的订单；
+</br>3、根据自己的行程，自主选择周边订单，及时取货，随程携带；
+</br>4、人人参与，重磅来袭；
+</br>5、社区发行程，让发货人主动找到您；
+</br>6、全程投保，订单全程冻结货物等值金额，在线订单实时跟踪；
+</br>7、在线电子签收、电子结算，数据信息历史保存；
+</br>8、费用及违禁寄品查询；
+</br>9、在线聊天，即时发送语音、图片和文字信息，轻松惬意。</td></tr>
+	</table>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+     <package name="com.hengshuo.chengszj.action.yuer" extends="json-default">
+   
+      	
+    	
+      	
+      	<action name="testurl" class="myyuerAction" method="urltest">
+      		  <result name="OK" type="json"></result>
+      	</action>  
+      	
+      		<action name="turn" class="myyuerAction" method="jiner">
+      		  <result name="OK" type="json"></result>
+      	</action>  
+      	
+      		
+    	<action name="chongzhi" class="myyuerAction" method="chongZhi">
+      		  <result name="OK">/testzhifu.jsp</result>
+      	</action>
+      	
+      	<action name="chongzhijilu" class="myyuerAction" method="chongZhiJiLu">
+      		  <result name="OK">/web/yuer/listChongzhi.jsp</result>
+      	</action>
+      <!-- 	<action name="tixianjilu" class="myyuerAction" method="tiXianJiLu">
+      		  <result name="OK">/web/yuer/listTixian.jsp</result>
+      	</action> -->
+      		
+      	<action name="CheckResult" class="myyuerAction" method="chongZhiCheck">
+      		  <result name="OK">/web/yuer/Result.jsp</result>
+      	</action>
+   
+   	<action name="receiptOK" class="myyuerAction" method="ReceiptOK">
+      		  <result name="OK">/web/yuer/Result.jsp</result>
+      	</action>
+        <action name="zfbPay" class="myyuerAction" method="receiptFukuan">
+      		  <result name="OK">/Receiptzhifu.jsp</result>
+      	</action>
+        <action name="wxPay" class="myyuerAction" method="wxPay">
+      		  <result name="OK">/Receiptzhifu.jsp</result>
+      	</action>
+        
+     </package>
+ </struts>

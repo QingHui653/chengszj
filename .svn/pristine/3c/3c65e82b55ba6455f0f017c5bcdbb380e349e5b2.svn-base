@@ -1,0 +1,57 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+     <package name="com.hengshuo.chengszj.action.helpmebuy" extends="json-default">
+  
+     
+     
+      	
+  		<action name="addHelpmebuy" class="helpmebuyAction" method="addHelpmebuy">
+      		  <result name="OK" type="json"></result>
+      	</action>
+      		<action name="HelpmebuyDetail" class="helpmebuyAction" method="detail">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      	
+      	<action name="removeHelpmebuy" class="helpmebuyAction" method="quXiaoHelpmebuy">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      	
+      	<action name="helpFaDan" class="helpmebuyAction" method="myFaDan">
+      		  <result name="OK"> /web/fadanlishi/helpLiShi.jsp</result>
+      	</action> 
+      	
+      	<action name="Hdetail" class="helpmebuyAction" method="Hdetail">
+      		   <result name="OK">/web/admin/dingdan/rwDetail.jsp</result>
+      	</action>
+      	
+      	
+      	
+     	  
+      	
+      	<action name="listHelpmebuy" class="helpmebuyAction" method="listHelpmebuy">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      	<!-- 发单人评价 -->
+      	<action name="HfpingJia" class="helpmebuyAction" method="pjiajson">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      	 <!-- 接单人评价 -->
+      	<action name="HjpingJia" class="helpmebuyAction" method="jPjiajson">
+      		  <result name="OK" type="json"></result>
+      	</action>
+      	
+      	
+      	
+      <action name="JSONhelpFaDan" class="helpmebuyAction" method="myFaDanJson">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      	<!-- 任务余额支付 -->
+         <action name="HyuEPay" class="helpmebuyAction" method="HyuEPay">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+        
+        
+     </package>
+ </struts>

@@ -1,0 +1,137 @@
+package com.hengshuo.chengszj.action.backset;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.baidu.a.a.a.c;
+import com.hengshuo.chengszj.action.BaseAction;
+import com.hengshuo.chengszj.common.util.BaiduMap;
+import com.hengshuo.chengszj.common.util.Define;
+import com.hengshuo.chengszj.common.util.ExceptionUtil;
+import com.hengshuo.chengszj.common.util.MessageHelper;
+import com.hengshuo.chengszj.model.Backset;
+import com.hengshuo.chengszj.model.User;
+import com.hengshuo.chengszj.service.backset.BacksetService;
+import com.hengshuo.chengszj.service.impl.backset.BacksetServiceI;
+import com.hengshuo.chengszj.service.impl.user.UserServiceI;
+import com.hengshuo.chengszj.service.user.UserService;
+
+public class BacksetAction extends BaseAction {
+	
+	private static final Logger log=Logger.getLogger(BacksetAction.class.getName());
+	 private BacksetService backsetService;
+	private UserService userService;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	public void setBacksetService(BacksetService backsetService) {
+		this.backsetService = backsetService;
+	}
+	 
+	 /**
+	  * 查询附近多少自由快递人
+	  */
+	 public String findNumber(){
+		 try {
+			 List<Backset> list=backsetService.findBacksetsByType(Define.BACKSET_TYPE_J);
+			 Double juli;
+			 if (list.size()>0) {
+				 juli=Double.valueOf(list.get(0).getName());
+				 if (juli<0) {
+					 juli=5.0;	
+				}
+			}else {
+				 juli=5.0;	
+			}
+			 
+			 String[] latAndLon=weizhi.split(",");
+			 Double lat2=Double.parseDouble(latAndLon[0]);
+			 Double lon2=Double.parseDouble(latAndLon[1]);
+			 List<User> users= userService.findUserByCity(city);
+			 int number=BaiduMap.getcount(lat2, lon2, users,juli);
+			 
+			 MessageHelper mh = new MessageHelper();
+	 		 mh.setResult(Define.S);
+	 		 mh.setMessage(String.valueOf(number));
+	 		 setMessageHelper(mh);
+	 		 
+		} catch (Exception e) {
+			 MessageHelper mh = new MessageHelper();
+	 		 mh.setResult(Define.F);
+	 		 mh.setMessage(Define.F_MESSAGE);
+	 		 setMessageHelper(mh);
+			log.error(ExceptionUtil.getStackMsg(e));
+		}
+		 return "OK";
+	 }
+	 
+	 /**
+	  * 获取单价 起步价
+	  */
+	 
+	 public String findPrice(){
+		 try {
+			List<String> listD=backsetService.findPrice(Define.BACKSET_TYPE_D);
+				Double dPrice=Double.valueOf(listD.get(0));
+			List<String> listQ=backsetService.findPrice(Define.BACKSET_TYPE_Q);
+				Double qPrice=Double.valueOf(listQ.get(0));
+				Count count=new Count();
+				count.setDanjia(dPrice);
+				count.setQibujia(qPrice);
+				
+				 MessageHelper mh = new MessageHelper();
+		 		 mh.setResult(Define.S);
+		 		 mh.setEntity(count);
+		 		 setMessageHelper(mh);
+		 } catch (Exception e) {
+			 MessageHelper mh = new MessageHelper();
+	 		 mh.setResult(Define.F);
+	 		 mh.setMessage(Define.F_MESSAGE);
+	 		 setMessageHelper(mh);
+			log.error(ExceptionUtil.getStackMsg(e));
+		}
+		 return "OK";
+	 }
+	 
+	 /**
+	  * 查询 快递公司列表
+	  */
+	 public String findExpress(){
+		 try {
+			List<Backset> list=backsetService.findBacksetsByType(type);
+			 MessageHelper mh = new MessageHelper();
+	 		 mh.setResult(Define.S);
+	 		 mh.setList(list);
+	 		 setMessageHelper(mh);
+			 
+		} catch (Exception e) {
+			 MessageHelper mh = new MessageHelper();
+	 		 mh.setResult(Define.F);
+	 		 mh.setMessage(Define.F_MESSAGE);
+	 		 setMessageHelper(mh);
+			log.error(ExceptionUtil.getStackMsg(e));
+		}
+		 return "OK";
+	 }
+	 
+	 private String weizhi;
+	 public void setWeizhi(String weizhi) {
+		this.weizhi = weizhi;
+	}
+	 private String city;
+	 public void setCity(String city) {
+		this.city = city;
+	}
+	 private String type;
+	 public void setType(String type) {
+		this.type = type;
+	}
+	 private MessageHelper messageHelper;
+	 public MessageHelper getMessageHelper() {
+		return messageHelper;
+	}
+	 public void setMessageHelper(MessageHelper messageHelper) {
+		this.messageHelper = messageHelper;
+	}
+}

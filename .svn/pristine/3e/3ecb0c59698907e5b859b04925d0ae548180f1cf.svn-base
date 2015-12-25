@@ -1,0 +1,39 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+     <package name="com.hengshuo.weisr.action.Admin" extends="json-default">
+        <!-- 
+        	<global-results>
+    		<result name="error">/error.jsp</result>
+    	</global-results>
+    	
+		 <global-exception-mappings>
+    		<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+    	</global-exception-mappings>
+         -->
+     <!--  <default-action-ref name="login-llo">
+     </default-action-ref>
+     	<action name="login-llo" class="loginAction" method="llogin">
+      		  <result name="ok">/te.jsp</result>
+    
+      	</action> -->
+     
+         <action name="login-lo" class="adminAction" method="login">
+      		  <result name="ok">/web/admin/main.jsp</result>
+      		  <result name="errorq">/web/admin/index1.jsp</result>
+      	</action>
+      	   <action name="adminlogin" class="adminAction" method="loginUI">
+      		  <result name="OK">/web/admin/index1.jsp</result>
+      	</action>
+      	
+      <!-- 	<action name="login-category" class="loginAction" method="rt">
+      		  <result name="cn">/category.jsp</result>
+      		  <result name="errorq">/index.jsp</result>
+      	</action> -->
+      	
+        
+        
+        
+     </package>
+ </struts>

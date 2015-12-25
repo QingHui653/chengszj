@@ -1,0 +1,36 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.custom.i18n.resources" value="server"></constant>
+	<constant name="objectFactory" value="spring"></constant>
+	<include file="struts-default.xml" />
+    <include file="com/hengshuo/chengszj/action/admin/struts-admin.xml" /> 
+	<include file="com/hengshuo/chengszj/action/user/struts-user.xml" /> 
+	<include file="com/hengshuo/chengszj/action/receipt/struts-receipt.xml" /> 
+	<include file="com/hengshuo/chengszj/action/helpmebuy/struts-helpmebuy.xml" /> 
+	<include file="com/hengshuo/chengszj/action/yuer/struts-myyuer.xml" /> 
+	<include file="com/hengshuo/chengszj/action/freeexpress/struts-freeexpress.xml" /> 
+	<include file="com/hengshuo/chengszj/action/feekback/struts-feekback.xml" /> 
+	<include file="com/hengshuo/chengszj/action/singlerelation/struts-singlerelation.xml" /> 
+	<include file="com/hengshuo/chengszj/action/buyrelation/struts-buyrelation.xml" /> 
+	<include file="com/hengshuo/chengszj/action/post/struts-post.xml" /> 
+		<include file="com/hengshuo/chengszj/action/yuer/struts-tixian.xml" /> 
+	<include file="com/hengshuo/chengszj/action/onlinepayment/struts-onlinepayment.xml" /> 
+		
+	
+	
+
+</struts>
+
+
+<!--<struts> 
+     <include file="cn/test/struts-test.xml" /> 
+    <package name="default" extends="struts-default"> 
+       <action name="TestS" class="cn.test.TestS">
+             <result name="s">/test.jsp</result>
+        </action>
+          
+    </package>   
+</struts>
+-->

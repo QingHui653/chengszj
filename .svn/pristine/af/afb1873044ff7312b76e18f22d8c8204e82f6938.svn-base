@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"><!-- 数据源类采用JDBC数据源 -->
+		<property name="driverClassName">
+			<!-- 将数据库连接交给了proxool管理,使它的驱动 -->
+			<value>org.logicalcobwebs.proxool.ProxoolDriver</value>
+		</property>
+		<property name="url">
+			<!-- 数据库连接池的别名,与proxool.xml中的Alias必须一致 -->
+			<value>proxool.DBPool</value>
+		</property>
+	</bean> 
+	<!--dataSource end -->
+	<!-- sessionfactory wjhlangzi scope="singleton" 只有一个实例存在-->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+		scope="singleton">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="cache.provider_class">
+					org.hibernate.cache.EhCacheProvider
+				</prop>
+				<prop key="hibernate.connection.provider_class">
+					org.hibernate.connection.ProxoolConnectionProvider
+				</prop>
+				<prop key="hibernate.connection.autocommit">true</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.dialect">
+				<!-- org.hibernate.dialect.MySQL5InnoDBDialect -->
+					com.hengshuo.chengszj.common.util.CustomDialect
+					<!-- org.hibernate.dialect.MySQLDialect -->
+				</prop><!--
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.Oracle9Dialect
+				</prop>
+				--><!--   wjhlangzi
+					此处要注意因为proxool自己释放数据库连接比慢,所以要在此给出释放连接的模式
+					
+					<prop key="hibernate.connection.release_mode">
+					after_statement
+					</prop>  -->
+				<!--   二级缓存     start         -->
+				<prop key="hibernate.cache.use_second_level_cache">
+					true
+				</prop>
+				<prop key="hibernate.cache.provider_class">
+					org.hibernate.cache.EhCacheProvider
+				</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.configurationResourceName">
+					ehcache.xml
+				</prop>
+				<!--   二级缓存  end     wjhlangzi      -->
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>
+					com/hengshuo/chengszj/model/Admin.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/User.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Message.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Receipt.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Helpmebuy.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Withdrawals.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Recharge.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Integral.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Freeexpress.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Feekback.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Singlerelation.hbm.xml
+				</value>
+				
+				<value>
+					com/hengshuo/chengszj/model/Buyrelation.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Post.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Reply.hbm.xml
+				</value>
+				<value>
+					com/hengshuo/chengszj/model/Onlinepayment.hbm.xml
+				</value>
+				
+				
+			</list>
+
+		</property>
+
+	</bean>
+
+
+	
+	<!-- 事务处理开始 -->
+	<!-- 定义事务类型 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<!-- 定义拦载器 -->
+
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="upd*">
+					PROPAGATION_REQUIRED,timeout_50,-Exception
+				</prop>
+				<prop key="del*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+
+				<prop key="find*">
+					PROPAGATION_SUPPORTS,readOnly,-Exception
+				</prop>
+				<prop key="load*">
+					PROPAGATION_SUPPORTS,readOnly,-Exception
+				</prop>
+				<prop key="get*">
+					PROPAGATION_SUPPORTS,readOnly,-Exception
+				</prop>
+				<!-- 需改成无事物 -->
+				<prop key="*">PROPAGATION_NEVER,readOnly</prop>
+
+				<!--
+					避免可重复读-->
+				<prop key="rupd*">
+					PROPAGATION_REQUIRED,ISOLATION_REPEATABLE_READ,-Exception
+				</prop>
+				<prop key="rdel*">
+					PROPAGATION_REQUIRED,ISOLATION_REPEATABLE_READ,-Exception
+				</prop>
+				<prop key="rsave*">
+					PROPAGATION_REQUIRED,ISOLATION_REPEATABLE_READ,-Exception
+				</prop>
+				<!--  避免幻读-->
+				<prop key="supd*">
+					PROPAGATION_REQUIRED,ISOLATION_SERIALIZABLE,-Exception
+				</prop>
+				<prop key="sdel*">
+					PROPAGATION_REQUIRED,ISOLATION_SERIALIZABLE,-Exception
+				</prop>
+				<prop key="ssave*">
+					PROPAGATION_REQUIRED,ISOLATION_SERIALIZABLE,-Exception
+				</prop>
+
+			</props>
+		</property>
+	</bean>
+
+	<!-- 定义bean别名自动代理创造器-->
+	<bean id="autoProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="proxyTargetClass">
+			<value>true</value>
+		</property>
+		<!--
+			<property name="taget-prent-class"><value>false</value></property>
+		-->
+		<property name="interceptorNames">
+			<value>transactionInterceptor</value>
+		</property>
+		<property name="beanNames">
+			<list>
+				<idref bean="adminServiceI"/>
+				<idref bean="userServiceI"/>
+				<idref bean="messageServiceI"/>
+				<idref bean="receiptServiceI"/>
+				<idref bean="helpmebuyServiceI"/>
+				<idref bean="withdrawalsServiceI"/>
+				<idref bean="rechargeServiceI"/>
+				<idref bean="integralServiceI"/>
+				<idref bean="freeexpressServiceI"/>
+				<idref bean="feekbackServiceI"/>
+				<idref bean="singlerelationServiceI"/>
+				<idref bean="buyrelationServiceI"/>
+				<idref bean="postServiceI"/>
+				<idref bean="replyServiceI"/>
+				<idref bean="onlinepaymentServiceI"/>
+			</list>
+			
+		</property>
+	</bean>
+
+	<!-- 事务处理结束 -->
+
+	<!-- dao层 -->
+			  	
+	<bean id="BaseDao" class="com.hengshuo.chengszj.dao.impl.BaseDao_I">
+
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<!-- model层 -->
+
+	<bean id="admin" class="com.hengshuo.chengszj.model.Admin"></bean>
+	<bean id="user" class="com.hengshuo.chengszj.model.User"></bean>
+	<bean id="message" class="com.hengshuo.chengszj.model.Message"></bean>
+	<bean id="receipt" class="com.hengshuo.chengszj.model.Receipt"></bean>
+	<bean id="helpmebuy" class="com.hengshuo.chengszj.model.Helpmebuy"></bean>
+	<bean id="withdrawals" class="com.hengshuo.chengszj.model.Withdrawals"></bean>
+	<bean id="recharge" class="com.hengshuo.chengszj.model.Recharge"></bean>
+	<bean id="integral" class="com.hengshuo.chengszj.model.Integral"></bean>
+	<bean id="freeexpress" class="com.hengshuo.chengszj.model.Freeexpress"></bean>
+	<bean id="feekback" class="com.hengshuo.chengszj.model.Feekback"></bean>
+	<bean id="singlerelation" class="com.hengshuo.chengszj.model.Singlerelation"></bean>
+	<bean id="buyrelation" class="com.hengshuo.chengszj.model.Buyrelation"></bean>
+	<bean id="post" class="com.hengshuo.chengszj.model.Post"></bean>
+	<bean id="reply" class="com.hengshuo.chengszj.model.Reply"></bean>
+	<bean id="onlinepayment" class="com.hengshuo.chengszj.model.Onlinepayment"></bean>
+</beans>

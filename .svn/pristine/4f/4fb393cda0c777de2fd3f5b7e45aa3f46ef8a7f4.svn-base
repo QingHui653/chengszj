@@ -1,0 +1,14 @@
+package com.hengshuo.chengszj.service.freeexpress;
+
+import java.io.Serializable;
+
+import com.hengshuo.chengszj.dao.BaseDao_S;
+import com.hengshuo.chengszj.model.Freeexpress;
+
+public interface FreeexpressService extends BaseDao_S<Freeexpress, Serializable> {
+		/**
+		 * 判断快递类型	
+		 * 根据userid 查询自由快递人属于某家公司
+		 */
+		public boolean checkKuaiDi(String userid,String flag);
+}

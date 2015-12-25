@@ -1,0 +1,14 @@
+@charset "utf-8";
+/* CSS Document */
+a{ text-decoration:none;}
+.fl{ float:left;}
+.fr{ float:right;}
+.xialak{ width:90%; height:120px; background-color:#dddddd; border-top:2px #f4f4f4 solid; border-bottom:2px #c4c4c4 solid; font-size:50px; color:#343434; line-height:130px;
+ padding:0 5%;}
+.xialak .xialabutton{ margin-top:45px;}
+.zxialak .xialabutton{ position:absolute; right:5%; top:20px;}
+.zxialak{ width:85%; height:; background-color:#e6e6e6; border-top:2px #f4f4f4 solid; border-bottom:2px #c4c4c4 solid; font-size:40px; color:#555555; line-height:100px;
+ padding:0 10% 0 5%; position:relative;}
+.daan{ width:90%; background-color:#fff; border-top:2px #f4f4f4 solid; border-bottom:2px #c4c4c4 solid; font-size:40px; color:#1d1d1d; line-height:100px;
+ padding:0 5%;}
+

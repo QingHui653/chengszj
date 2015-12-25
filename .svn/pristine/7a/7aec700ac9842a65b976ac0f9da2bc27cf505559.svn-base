@@ -1,0 +1,67 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+     <package name="com.hengshuo.weisr.action.Admin" extends="json-default">
+        <!-- 
+        	<global-results>
+    		<result name="error">/error.jsp</result>
+    	</global-results>
+    	
+		 <global-exception-mappings>
+    		<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+    	</global-exception-mappings>
+         -->
+     <!--  <default-action-ref name="login-llo">
+     </default-action-ref>
+     	<action name="login-llo" class="loginAction" method="llogin">
+      		  <result name="ok">/te.jsp</result>
+    
+      	</action> -->
+     
+         <action name="login-lo" class="adminAction" method="login">
+      		  <result name="ok">/web/admin/main.jsp</result>
+      		  <result name="errorq">/web/admin/index1.jsp</result>
+      	</action>
+      	   <action name="adminlogin" class="adminAction" method="loginUI">
+      		  <result name="OK">/web/admin/index1.jsp</result>
+      	</action>
+      	   <action name="findAdmin" class="adminAction" method="findAdmin">
+      		  <result name="OK">/web/admin/admins/listAdmin.jsp</result>
+      	</action>
+      	<action name="exit" class="adminAction" method="exit">
+      		  <result name="OK">/web/admin/index1.jsp</result>
+      	</action>
+      	<!-- 添加管理员 -->
+      	<action name="addAdmin" class="adminAction" method="addAdmin">
+      		  <result name="OK" type="chain">findAdmin</result>
+      	</action>
+      	
+      	<!-- 删除-->
+      	<action name="deleteAdmin" class="adminAction" method="deleteAdmin">
+      		  <result name="OK" type="chain">findAdmin</result>
+      	</action>
+      	
+      	<!-- 修改 -->
+      	<action name="updateAdmin" class="adminAction" method="updateAdmin">
+      		  <result name="OK" type="chain">findAdmin</result>
+      	</action>
+      	
+      	<action name="updateAdminUI" class="adminAction" method="updateAdminUI">
+      		  <result name="OK">/web/admin/admins/updateAdmin.jsp</result>
+      	</action>
+      	<!-- 添加管理员界面 -->
+      	<action name="addAUI" class="adminAction" method="addUI">
+      		  <result name="OK">/web/admin/admins/addAdmin.jsp</result>
+      	</action>
+      	
+      <!-- 	<action name="login-category" class="loginAction" method="rt">
+      		  <result name="cn">/category.jsp</result>
+      		  <result name="errorq">/index.jsp</result>
+      	</action> -->
+      	
+        
+        
+        
+     </package>
+ </struts>

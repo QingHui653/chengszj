@@ -1,0 +1,59 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+   
+     <package name="com.hengshuo.chengszj.action.receipt"  extends="json-default">
+     	
+     	<action name="findJieDanM" class="receiptAction" method="findJieDanM">
+      		  <result name="OK" type="json"></result>
+    	 </action> 
+    	 
+  		 <action name="addReceipts" class="receiptAction" method="addReceipt">
+      		  <result name="OK" type="json"></result>
+    	 </action> 
+    	  <action name="ReceiptDetail" class="receiptAction" method="detail">
+      		  <result name="OK" type="json"></result>
+    	 </action> 
+    	 
+    	   <action name="Rdetail" class="receiptAction" method="uiDetail">
+      		     <result name="OK">/web/admin/dingdan/bangsongDetail.jsp</result>
+    	 </action> 
+    	 
+    	 <action name="removeReceipt" class="receiptAction" method="quXiaoReceipt">
+      		  <result name="OK" type="json"></result>
+     	 </action> 
+     	 
+     	  <action name="wodefadanJSON" class="receiptAction" method="jsonMyFaDan">
+      		  <result name="OK" type="json"></result>
+     	 </action> 
+     	 
+     	  <action name="wodefadan" class="receiptAction" method="myFaDan">
+      		  <result name="OK">/web/fadanlishi/receiptLiShi.jsp</result>
+     	 </action> 
+     	  
+     	 
+     	 
+     	 
+     	 
+     	  <action name="RfpingJia" class="receiptAction" method="pingJiajson">
+      		  <result name="OK" type="json"></result>
+     	 </action> 
+     	 
+     	 <action name="RjpingJia" class="receiptAction" method="jPingJiajson">
+      		  <result name="OK" type="json"></result>
+     	 </action> 
+     	 
+     	 
+     	    <action name="listReceipt" class="receiptAction" method="listReceipt">
+      		  <result name="OK" type="json"></result>
+     	 </action> 
+     	 <action name="RyuEPay" class="receiptAction" method="yuEPay">
+      		  <result name="OK" type="json"></result>
+     	 </action> 
+   
+      		
+      
+        
+     </package>
+ </struts>

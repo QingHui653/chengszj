@@ -1,0 +1,83 @@
+package com.hengshuo.chengszj.action.admin;
+
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.SessionAware;
+import org.aspectj.apache.bcel.generic.NEW;
+
+
+import com.hengshuo.chengszj.action.BaseAction;
+import com.hengshuo.chengszj.exception.Myexception;
+import com.hengshuo.chengszj.model.Admin;
+import com.hengshuo.chengszj.service.admin.AdminService;
+
+
+
+
+
+public class AdminAction extends BaseAction implements SessionAware,RequestAware {
+	private static Logger log = Logger.getLogger(AdminAction.class
+			.getName());
+	private String name;
+
+	private String password;
+	private Map<String, Object> session;
+	private Map<String, Object> request;
+	private AdminService adminService;
+	public void setAdminService(AdminService adminService) {
+		this.adminService = adminService;
+	}
+	
+	
+	public String login(){
+	try {
+		List<Admin> Userlist = adminService.login(name);
+		Admin user=Userlist.get(0);
+		String psString=user.getPassword();
+		if(psString.equals(password)){
+			session.put("user", user);
+			System.out.println("OK");
+			return "ok";
+		}
+		else{
+			request.put("pass", "密码错误");
+			return "errorq";
+			}
+		} catch (Exception e) {
+		// TODO Auto-generated catch block
+			request.put("error", "账号不存在");
+			}
+	return "errorq";
+
+}
+	public String loginUI(){
+		return "OK";
+		
+	}
+	
+	
+	@Override
+	public void setSession(Map arg0) {
+		// TODO Auto-generated method stub
+		this.session=arg0;
+	}
+	@Override
+	public void setRequest(Map arg0) {
+		// TODO Auto-generated method stub
+		this.request=arg0;
+	}
+public void setName(String name) {
+	this.name = name;
+}
+	
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	
+}

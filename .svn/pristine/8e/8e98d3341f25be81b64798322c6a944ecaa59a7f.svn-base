@@ -1,0 +1,69 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+   
+     <package name="com.hengshuo.chengszj.action.receipt"  extends="json-default">
+     		
+     	 <action name="testvi" class="receiptAction" method="testvideo">
+      		  <result name="OK" type="json"></result>
+    	 </action> 
+     
+     
+    	 <action name="findJieDanM" class="receiptAction" method="findJieDanM">
+      		  <result name="OK" type="json"></result>
+    	 </action> 
+    	 
+  		 <action name="addReceipts" class="receiptAction" method="addReceipt">
+      		  <result name="OK" type="json"></result>
+    	 </action> 
+    	  <action name="ReceiptDetail" class="receiptAction" method="detail">
+      		  <result name="OK" type="json"></result>
+    	 </action> 
+    	 <!--  <action name="Rdetail" class="receiptAction" method="uiDetail">
+      		    <result name="OK">/web/fadanlishi/Rdetail.jsp</result>
+    	 </action>  -->
+    	 
+    	   <action name="Rdetail" class="receiptAction" method="uiDetail">
+      		     <result name="OK">/web/admin/dingdan/bangsongDetail.jsp</result>
+    	 </action> 
+    	 
+    	 <action name="removeReceipt" class="receiptAction" method="quXiaoReceipt">
+      		  <result name="OK" type="json"></result>
+     	 </action> 
+     	 
+     	  <action name="wodefadanJSON" class="receiptAction" method="jsonMyFaDan">
+      		  <result name="OK" type="json"></result>
+     	 </action> 
+     	 
+     	  <action name="wodefadan" class="receiptAction" method="myFaDan">
+      		  <result name="OK">/web/fadanlishi/receiptLiShi.jsp</result>
+     	 </action> 
+     	  <action name="RquxUI" class="receiptAction" method="quxiaoUI">
+      		  <result name="OK">/web/fadanlishi/Rquxiao.jsp</result>
+     	 </action> 
+     	  <action name="Rquxiao" class="receiptAction" method="quxiao">
+      		  <result name="OK" type="chain"> wodefadan</result>
+     	 </action> 
+     	 
+     	   <action name="pjia" class="receiptAction" method="pingJia">
+      		  <result name="OK" type="chain"> wodefadan </result>
+     	 </action> 
+     	 
+     	  <action name="pingJiajson" class="receiptAction" method="pingJiajson">
+      		  <result name="OK" type="json"></result>
+     	 </action> 
+     	 
+     	  <action name="pinjiaUI"  class="receiptAction" method="pinjiaUI">
+      		   <result name="OK">/web/fadanlishi/Rpingjia.jsp</result>
+     	 </action> 
+     	    <action name="listReceipt" class="receiptAction" method="listReceipt">
+      		  <result name="OK" type="json"></result>
+     	 </action> 
+     	 
+   
+      		
+      
+        
+     </package>
+ </struts>

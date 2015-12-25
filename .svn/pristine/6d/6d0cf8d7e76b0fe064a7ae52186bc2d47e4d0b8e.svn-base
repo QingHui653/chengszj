@@ -1,0 +1,50 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+     <package name="com.hengshuo.chengszj.action.freeexpress" extends="json-default">
+  
+     
+     
+     
+  		<action name="ziyoukuaidi" class="freeexpressAction" method="shenQin">
+      		  <result name="OK" type="json"></result>
+      	</action> 
+      	
+      	<action name="myFreeexpress" class="freeexpressAction" method="myFreeexpress">
+      		  <result name="OK" type="json"></result>
+      	</action>
+      	<action name="listFE" class="freeexpressAction" method="listKuaiDiRen">
+      		  <result name="OK">/web/admin/Listkuaidiren.jsp</result>
+      	</action>
+      	<action name="FEdetailss" class="freeexpressAction" method="UIdetail">
+      		  <result name="OK">/web/admin/FreeDetail.jsp</result>
+      	</action>
+      	<action name="listFEW" class="freeexpressAction" method="listW">
+      		  <result name="OK">/web/admin/listFE.jsp</result>
+      	</action>
+      	<action name="FEdetail" class="freeexpressAction" method="UIdetail">
+      		  <result name="OK">/web/admin/FEdetail.jsp</result>
+      	</action>
+      	
+      	 	<action name="FEshenhe" class="freeexpressAction" method="shenHe">
+      		  <result name="OK" type="chain">listFEW</result>
+      	</action>
+      		
+      	<action name="xiugaiFE" class="freeexpressAction" method="updateFree">
+      		  <result name="OK" type="json"></result>
+      	</action>
+      	<action name="deleteFE" class="freeexpressAction" method="deleteFree">
+      		  <result name="OK" type="chain">listFE</result>
+      	</action>
+      	<action name="deleteAllFE" class="freeexpressAction" method="deleteAllFree">
+      		  <result name="OK" type="chain">listFE</result>
+      	</action>
+      	
+   
+      
+        
+        
+        
+     </package>
+ </struts>

@@ -1,0 +1,25 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+     <package name="com.hengshuo.chengszj.action.yuer2" extends="json-default">
+   
+      	
+      
+    	<action name="tixian" class="tixianAction" method="tiXian">
+      		  <result name="OK" type="json"></result>
+      	</action>
+      	<action name="tishenhe" class="tixianAction" method="shenhe">
+      		  <result name="OK">/web/admin/tixian.jsp</result>
+      	</action>
+      	<action name="tixianshenhe" class="tixianAction" method="shenhez">
+      		  <result name="OK" type="chain">tishenhe</result>
+      	</action>
+      
+        <action name="tixianjilu" class="tixianAction" method="tiXianJiLu">
+      		  <result name="OK">/web/yuer/listTixian.jsp</result>
+      	</action>
+        
+        
+     </package>
+ </struts>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name>test</display-name>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+			/WEB-INF/classes/springconf/biz/applicationContext_hibernate.xml,
+			/WEB-INF/classes/springconf/biz/applicationContext_common.xml,
+			/WEB-INF/classes/springconf/biz/applicationContext_basemanager.xml,
+			
+
+		</param-value>
+  </context-param>
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>*.action</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>struts2</filter-name>
+    <filter-class>
+			org.apache.struts2.dispatcher.FilterDispatcher
+		</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>struts2</filter-name>
+    <url-pattern>*.action</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>struts2</filter-name>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+  <welcome-file-list>
+    <welcome-file>download.html</welcome-file>
+  </welcome-file-list>
+  <context-param>
+    <param-name>proxoolConfigLocation</param-name>
+    <param-value>WEB-INF/classes/Proxool.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.logicalcobwebs.proxool.configuration.ListenerConfigurator</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>Admin</servlet-name>
+    <servlet-class>
+			org.logicalcobwebs.proxool.admin.servlet.AdminServlet
+		</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Admin</servlet-name>
+    <url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+  <listener>
+    <listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+  </listener>
+ 
+ <listener>    
+   <listener-class>
+   com.hengshuo.chengszj.common.util.socket.SocketListener
+   </listener-class>    
+</listener>  
+
+ 
+  <filter>
+    <filter-name>PermissionFilter</filter-name>
+    <filter-class>
+			com.hengshuo.chengszj.common.util.PermissionFilter
+		</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>PermissionFilter</filter-name>
+    <url-pattern>/system/*</url-pattern>
+  </filter-mapping>
+</web-app>

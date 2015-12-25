@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<div style=" font-size:14px; text-align:center;" class="wrapper">
+    
+	<div class="right">
+        <div class="anquan">
+        	<table border="1" cellspacing="0" style="width:95%; margin:auto; margin-top:50px;" width="95%">
+	<colgroup>
+		<col />
+		<col />
+		<col />
+		<col />
+		<col />
+	</colgroup>
+	<tbody>
+		<tr height="48">
+			<td colspan="5" height="48" style="height:48px;width:649px;">
+				发单（百托）管理条例</td>
+		</tr>
+		<tr height="25">
+			<td height="50" rowspan="2" style="height:51px;">
+				编号</td>
+			<td rowspan="2">
+				管理规则</td>
+			<td colspan="3">
+				1个月</td>
+		</tr>
+		<tr height="25">
+			<td height="25" style="height:26px;">
+				1次</td>
+			<td>
+				2次</td>
+			<td>
+				3次及以上</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				1</td>
+			<td style="width:335px;">
+				恶意取消订单</td>
+			<td rowspan="3" style="width:67px;">
+				警告</td>
+			<td rowspan="3" style="width:px;">
+				停用2日</td>
+			<td rowspan="3" style="width:px;">
+				停用7日</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				2</td>
+			<td style="width:335px;">
+				拒绝补偿因收发货人原因造成的二次运费</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				3</td>
+			<td>
+				不配合平台的协调取证或态度恶劣</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				4</td>
+			<td style="width:335px;">
+				故意填报不实订单信息：地址、电话、重量、价值</td>
+			<td rowspan="3" style="width:67px;">
+				警告</td>
+			<td rowspan="3" style="width:76px;">
+				停用7日</td>
+			<td rowspan="3" style="width:100px;">
+				长期停用</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				5</td>
+			<td style="width:335px;">
+				私下要求自由接单人捎带货物</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				6</td>
+			<td>
+				恶意投诉、差评自由接单人；</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				7</td>
+			<td style="width:335px;">
+				恶意发布无需求订单</td>
+			<td rowspan="4" style="width:67px;">
+				警告</td>
+			<td rowspan="4" style="width:76px;">
+				长期停用</td>
+			<td rowspan="4" style="width:100px;">
+				没机会啦</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				8</td>
+			<td style="width:335px;">
+				恶意发布违禁品</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				9</td>
+			<td style="width:335px;">
+				在重要提示中指定**自由接单人接单</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				10</td>
+			<td>
+				不按平台规则支付配送费</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				11</td>
+			<td style="width:335px;">
+				恶意索赔：虚报货物价值、不合理赔偿要求（如超过申明价值的理赔要求。）</td>
+			<td rowspan="3" style="width:67px;">
+				长期停用</td>
+			<td rowspan="3" style="width:76px;">
+				没机会啦</td>
+			<td rowspan="3" style="width:100px;">
+				没机会啦</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				12</td>
+			<td style="width:335px;">
+				任何故意不尊重自由接单人的行为</td>
+		</tr>
+		<tr height="42">
+			<td height="42" style="height:43px;">
+				13</td>
+			<td>
+				任何恶意损害百托服务平台信誉的行为</td>
+		</tr>
+		<tr height="50">
+			<td colspan="5" height="50" style="height:51px;width:649px;">
+				注：符合处罚条件的用户，平台会严格按此条例执行。用户在24小时内有申诉的权利。</td>
+		</tr>
+	</tbody>
+</table>
+
+  </div>
+        </div>
+</div>
+
+</body>
+</html>

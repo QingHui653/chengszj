@@ -1,0 +1,83 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+     <package name="com.hengshuo.chengszj.action.backset" extends="json-default">
+  	 	<!-- 快递公司列表-->
+  	 
+  	 <action name="findExpress" class="backsetAction" method="findExpress">
+      		  <result name="OK" type="json"></result>
+      </action> 
+      
+      		<!-- 附近多少人-->
+      	<action name="findNumber" class="backsetAction" method="findNumber">
+      		  <result name="OK" type="json"></result>
+      	</action>
+      	<!-- 获取价格 -->
+  		 <action name="findPrice" class="backsetAction" method="findPrice">
+      		  <result name="OK" type="json"></result>
+      	</action>
+   
+      	<!-- 后台城市列表 -->
+        <action name="cityManage" class="backsetAction" method="cityManage">
+      		  <result name="OK">/web/admin/city/listCity.jsp</result>
+      	</action>
+      	<!-- 修改城市 -->
+      	<action name="updateCity" class="backsetAction" method="updateCity">
+      		  <result name="OK" type="chain">cityManage</result>
+      		   <result name="C" type="chain">cityManage</result>
+      		   <result name="J" type="chain">findJuli</result>
+      		    
+      	</action>
+      	<!-- 进入添加页面 -->
+      	<action name="addCityUI" class="backsetAction" method="addCityUI">
+      		  <result name="C">/web/admin/city/addCity.jsp</result>
+      	</action>
+      	
+      	<!-- 详情 -->
+      	<action name="cityDetail" class="backsetAction" method="cityDetail">
+      	 	<result name="C">/web/admin/city/Citydetail.jsp</result>
+      	 	<result name="G">/web/admin/images/IMGDetail.jsp</result>
+      		  <result name="OK" type="chain">cityManage</result>
+      	</action>
+      	<!-- 添加城市 -->
+      	<action name="addCity" class="backsetAction" method="addCity">
+      		  <result name="OK" type="chain">cityManage</result>
+      	</action>
+      	<!-- 单价，起步价 -->
+        <action name="backsetPrice" class="backsetAction" method="backsetPrice">
+      		  <result name="OK">/web/admin/city/Pricedetail.jsp</result>
+      	</action>
+      	<!-- 修改单价，起步价 -->
+        <action name="updatePrice" class="backsetAction" method="updatePrice">
+      		  <result name="OK" type="chain">backsetPrice</result>
+      	</action>
+        <action name="findJuli" class="backsetAction" method="findJuli">
+      		  <result name="OK">/web/admin/city/Julidetail.jsp</result>
+      	</action>
+        
+        <action name="listImageL" class="backsetAction" method="listImageL">
+      		  <result name="OK">/web/admin/images/listIMG.jsp</result>
+      	</action>
+      	
+      	 <action name="listImageG" class="backsetAction" method="listImageG">
+      		  <result name="OK">/web/admin/images/listIMG.jsp</result>
+      	</action>
+      	
+      	<action name="updateimg" class="backsetAction" method="updateimg">
+      		 <result name="input">/web/admin/images/IMGDetail.jsp</result>
+      		 	 <interceptor-ref name="fileUpload">
+                <!-- 文件过滤 -->
+               <!-- 文件大小, 以字节为单位 -->
+               <param name="maximumSize">22000000000</param>
+           	 </interceptor-ref>
+          	  <!-- 默认拦截器必须放在fileUpload之后，否则无效 -->
+          	  <interceptor-ref name="defaultStack" />
+      	  <result name="OK" type="redirectAction">listImageG</result>
+      	    <result name="L" type="redirectAction">listImageL</result>
+      	      <result name="G" type="redirectAction">listImageG</result>
+   		</action>
+      	
+        
+     </package>
+ </struts>

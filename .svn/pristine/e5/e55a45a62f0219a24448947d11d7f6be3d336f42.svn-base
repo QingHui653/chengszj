@@ -1,0 +1,5 @@
+struts.devMode=false
+struts.i18n.reload=true
+struts.configuration.xml.reload=true
+struts.locale=en_UTF-8
+struts.custom.i18n.resources=message_zh_CN

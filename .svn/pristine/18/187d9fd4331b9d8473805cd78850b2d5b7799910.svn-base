@@ -1,0 +1,112 @@
+package com.hengshuo.chengszj.common.util;
+
+public class Define {
+	
+	
+	public  static final Integer port=8888;
+	//Y是自由快递人 N不是
+	public static final String USER_STATUS_Y="Y";
+	public static final String USER_STATUS_N="N";
+	//Education 学历（1初中，2高中/中专技校，3大专，4本科及以上）
+	//Occupation 职业（1普通职员，2自由职业者，3学生，4其他）
+	//Vehicle 交通工具（0不限，1自行车，2电瓶车，3摩托车，4驾车，5地铁，6公交，7步行）
+	//余额S成功 F失败 Z提现中
+	public  static final String YUER_S="S";
+	public  static final String YUER_F="F";
+	public  static final String YUER_Z="Z";
+	//充值方式（Z支付宝支付,W微信支付，Y银行卡支付）
+	public  static final String CHONGZHI_TYPE_Z="Z";
+	public  static final String CHONGZHI_TYPE_W="W";
+	public  static final String CHONGZHI_TYPE_Y="Y";
+	// accept 是否采纳(0为未审核，1采纳，2未采纳)
+	public  static final String  ACCEPT_0="0";
+	public  static final String  ACCEPT_1="1";
+	public  static final String  ACCEPT_2="2";
+	//用户头像保存地址
+	public  static final String  IMAGES_USER="/images/user";
+	//用户发货图片保存地址
+	public  static final String  IMAGES_RECEIPT="/images/receipt";
+	//用户发任务图片保存地址
+	public  static final String  IMAGES_RW="/images/faRW";
+	public  static final String  IMAGES_APPIMG="/images/appimg";
+	//自由快递人状态（1申请未审核，2审核通过，3未通过）
+	public static final String KUAIDIREN_STATUS_1="1";
+	public static final String KUAIDIREN_STATUS_2="2";
+	public static final String KUAIDIREN_STATUS_3="3";
+	//发货评价  1 成功送达 2延时送达 3未送达
+	public static final String PINGJIA_S="1";
+	public static final String PINGJIA_Y="2";
+	public static final String PINGJIA_W="3";
+	//同城快递
+	public static final String KUAIDI_TONGCHENG="同城快递";
+
+	//发货状态 1已发单未支付，2已支付未接，3已接单，4已送达  5评价 6取消   7客服 结束
+	public static final String RECEIPT_STATUS_1="1";
+	public static final String RECEIPT_STATUS_2="2";
+	public static final String RECEIPT_STATUS_3="3";
+	public static final String RECEIPT_STATUS_4="4";
+	public static final String RECEIPT_STATUS_5="5";
+	public static final String RECEIPT_STATUS_6="6";
+	public static final String RECEIPT_STATUS_8="7";
+	
+	//帮我买状态 1已发单未支付，2已支付未接，3已接单，4已送达  5评价 6取消   7客服 结束
+			public static final String HELPMEBUY_STATUS_1="1";
+			public static final String HELPMEBUY_STATUS_2="2";
+			public static final String HELPMEBUY_STATUS_3="3";
+			public static final String HELPMEBUY_STATUS_4="4";
+			public static final String HELPMEBUY_STATUS_5="5";
+			public static final String HELPMEBUY_STATUS_6="6";
+			public static final String HELPMEBUY_STATUS_7="7";
+			
+   //支付类型  X现金支付  O在线支付          Z支付宝  W微信 Y余额
+		public static final String PAY_TYPE_X="X";
+		public static final String PAY_TYPE_O="O";
+		public static final String PAY_TYPE_Z="Z";
+		public static final String PAY_TYPE_W="W";
+		public static final String PAY_TYPE_Y="Y";
+			
+	/*	//发货状态 1已发单未被接取，2已被接取，3取消，4任务完成  5未送达 6在线支付完成
+	public static final String RECEIPT_STATUS_W="1";
+	public static final String RECEIPT_STATUS_Y="2";
+	public static final String RECEIPT_STATUS_Q="3";
+	public static final String RECEIPT_STATUS_S="4";
+	public static final String RECEIPT_STATUS_F="5";
+	public static final String RECEIPT_STATUS_6="6";*/
+	
+	/*//帮我送状态 1已发布未被接取，2已被接取，3取消，4任务完成  5未送达
+	public static final String HELPMEBUY_STATUS_W="1";
+	public static final String HELPMEBUY_STATUS_Y="2";
+	public static final String HELPMEBUY_STATUS_Q="3";
+	public static final String HELPMEBUY_STATUS_S="4";
+	public static final String HELPMEBUY_STATUS_F="5";*/
+	
+	
+	
+	
+	//帮我送关系表  完成状态（1配送中，2完成）
+	public static final String RELATION_STATUS_P="1";
+	public static final String RELATION_STATUS_W="2";
+	//操作状态  S 代表成功  F代表出错
+		public static final String S="S";
+		public static final String F_MESSAGE="操作失败";
+		
+		public static final String F="F";
+		//类型 M图片 X消息 C城市 K快递 J附近距离 L轮播图 G广告图 Q起步价 D单价
+		public static final String BACKSET_TYPE_M="M";
+		public static final String BACKSET_TYPE_X="X";
+		public static final String BACKSET_TYPE_C="C";
+		public static final String BACKSET_TYPE_K="K";
+		public static final String BACKSET_TYPE_J="J";
+		public static final String BACKSET_TYPE_L="L";
+		public static final String BACKSET_TYPE_G="G";
+		public static final String BACKSET_TYPE_Q="Q";
+		public static final String BACKSET_TYPE_D="D";
+
+			//在线支付  所属任务类型  R帮我送    H帮我买（任务）； B办事      不够BG
+		public static final String ONLINE_TYPE_R="R";
+		public static final String ONLINE_TYPE_H="H";
+		public static final String ONLINE_TYPE_B="B";
+		public static final String ONLINE_TYPE_RBG="RBG";
+		public static final String ONLINE_TYPE_HBG="HBG";
+		public static final String ONLINE_TYPE_BBG="BBG";
+}

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- service层 -->	
+	
+	<bean id="adminServiceI" class="com.hengshuo.chengszj.service.impl.admin.AdminServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Admin</value></constructor-arg>
+	</bean>
+	
+	<bean id="userServiceI" class="com.hengshuo.chengszj.service.impl.user.UserServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.User</value></constructor-arg>
+	</bean>
+	
+	<bean id="messageServiceI" class="com.hengshuo.chengszj.service.impl.message.MessageServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Message</value></constructor-arg>
+	</bean>
+	
+		<bean id="receiptServiceI" class="com.hengshuo.chengszj.service.impl.receipt.ReceiptServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Receipt</value></constructor-arg>
+	</bean>
+		
+		<bean id="helpmebuyServiceI" class="com.hengshuo.chengszj.service.impl.helpmebuy.HelpmebuyServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Helpmebuy</value></constructor-arg>
+	</bean>
+	
+		<bean id="withdrawalsServiceI" class="com.hengshuo.chengszj.service.impl.withdrawals.WithdrawalsServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Withdrawals</value></constructor-arg>
+	</bean>
+	
+		<bean id="rechargeServiceI" class="com.hengshuo.chengszj.service.impl.recharge.RechargeServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Recharge</value></constructor-arg>
+	</bean>
+		<bean id="integralServiceI" class="com.hengshuo.chengszj.service.impl.integral.IntegralServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Integral</value></constructor-arg>
+	</bean>
+	
+	<bean id="freeexpressServiceI" class="com.hengshuo.chengszj.service.impl.freeexpress.FreeexpressServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Freeexpress</value></constructor-arg>
+	</bean>
+	
+	<bean id="feekbackServiceI" class="com.hengshuo.chengszj.service.impl.feekback.FeekbackServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Feekback</value></constructor-arg>
+	</bean>
+	
+	<bean id="singlerelationServiceI" class="com.hengshuo.chengszj.service.impl.singlerelation.SinglerelationServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Singlerelation</value></constructor-arg>
+	</bean>
+	
+	<bean id="buyrelationServiceI" class="com.hengshuo.chengszj.service.impl.buyrelation.BuyrelationServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Buyrelation</value></constructor-arg>
+	</bean>
+	
+	<bean id="postServiceI" class="com.hengshuo.chengszj.service.impl.post.PostServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Post</value></constructor-arg>
+	</bean>
+	<bean id="replyServiceI" class="com.hengshuo.chengszj.service.impl.reply.ReplyServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Reply</value></constructor-arg>
+	</bean>
+	<bean id="onlinepaymentServiceI" class="com.hengshuo.chengszj.service.impl.onlinepayment.OnlinepaymentServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Onlinepayment</value></constructor-arg>
+	</bean>
+	<bean id="backsetServiceI" class="com.hengshuo.chengszj.service.impl.backset.BacksetServiceI">
+			<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<constructor-arg>
+		 <value>com.hengshuo.chengszj.model.Backset</value></constructor-arg>
+	</bean>
+	
+	
+	<!-- action -->
+	<bean id="adminAction" class="com.hengshuo.chengszj.action.admin.AdminAction" scope="prototype">
+		<property name="adminService">
+			<ref bean="adminServiceI"/>
+		</property>
+		<property name="backsetService">
+			<ref bean="backsetServiceI"/>
+		</property>
+	</bean>
+	<bean id="userAction" class="com.hengshuo.chengszj.action.user.UserAction" scope="prototype">
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+		<property name="messageService">
+			<ref bean="messageServiceI"/>
+		</property>
+		<property name="integralService">
+			<ref bean="integralServiceI"/>
+		</property>
+	</bean>
+	<bean id="receiptAction" class="com.hengshuo.chengszj.action.receipt.ReceiptAction" scope="prototype">
+		<property name="receiptService">
+			<ref bean="receiptServiceI"/>
+		</property>
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+		<property name="helpmebuyService">
+			<ref bean="helpmebuyServiceI"/>
+		</property>
+		<property name="service">
+			<ref bean="singlerelationServiceI"/>
+		</property>
+		<property name="integralService">
+			<ref bean="integralServiceI"/>
+		</property>
+		<property name="singlerelationService">
+			<ref bean="singlerelationServiceI"/>
+		</property>
+		<property name="buyrelationService">
+			<ref bean="buyrelationServiceI"/>
+		</property>
+		<property name="messageService">
+			<ref bean="messageServiceI"/>
+		</property>
+	</bean>
+	<bean id="helpmebuyAction" class="com.hengshuo.chengszj.action.helpmebuy.HelpmebuyAction" scope="prototype">
+		<property name="helpmebuyService">
+			<ref bean="helpmebuyServiceI"/>
+		</property>
+		<property name="buyrelationService">
+			<ref bean="buyrelationServiceI"/>
+		</property>
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+		<property name="integralService">
+			<ref bean="integralServiceI"/>
+		</property>
+		<property name="messageService">
+			<ref bean="messageServiceI"/>
+		</property>
+		
+	</bean>
+		<bean id="myyuerAction" class="com.hengshuo.chengszj.action.yuer.MyyuerAction" scope="prototype">
+		<property name="withdService">
+			<ref bean="withdrawalsServiceI"/>
+		</property>
+		<property name="rechargeService">
+			<ref bean="rechargeServiceI"/>
+		</property>
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+			<property name="receiptService">
+			<ref bean="receiptServiceI"/>
+		</property>
+			<property name="singlerelationService">
+			<ref bean="singlerelationServiceI"/>
+		</property>
+			<property name="integralService">
+			<ref bean="integralServiceI"/>
+		</property>
+			<property name="onlinepaymentService">
+			<ref bean="onlinepaymentServiceI"/>
+		</property>
+		<property name="messageService">
+			<ref bean="messageServiceI"/>
+		</property>
+		<property name="helpmebuyService">
+			<ref bean="helpmebuyServiceI"/>
+		</property>
+		
+		
+		
+		
+	</bean>
+	<bean id="tixianAction" class="com.hengshuo.chengszj.action.yuer.TixianAction" scope="prototype">
+		<property name="withdService">
+			<ref bean="withdrawalsServiceI"/>
+		</property>
+		<property name="rechargeService">
+			<ref bean="rechargeServiceI"/>
+		</property>
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+		
+	</bean>
+	<bean id="freeexpressAction" class="com.hengshuo.chengszj.action.freeexpress.FreeexpressAction" scope="prototype">
+		<property name="freeexpressService">
+			<ref bean="freeexpressServiceI"/>
+		</property>
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+		<property name="integralService">
+			<ref bean="integralServiceI"/>
+		</property>
+		<property name="messageService">
+			<ref bean="messageServiceI"/>
+		</property>
+		
+	</bean>
+	<bean id="feekbackAction" class="com.hengshuo.chengszj.action.feekback.FeekbackAction" scope="prototype">
+		<property name="feekbackService">
+			<ref bean="feekbackServiceI"/>
+		</property>
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+		<property name="integralService">
+			<ref bean="integralServiceI"/>
+		</property>
+	</bean>
+	
+	<bean id="singlerelationAction" class="com.hengshuo.chengszj.action.singlerelation.SinglerelationAction" scope="prototype">
+		<property name="service">
+			<ref bean="singlerelationServiceI"/>
+		</property>
+		<property name="receiptService">
+			<ref bean="receiptServiceI"/>
+		</property>
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+		<property name="fService">
+			<ref bean="freeexpressServiceI"/>
+		</property>
+	</bean>
+	
+	<bean id="buyrelationAction" class="com.hengshuo.chengszj.action.buyrelation.BuyrelationAction">
+		<property name="helpmebuyService">
+			<ref bean="helpmebuyServiceI"/>
+		</property>
+		<property name="buyrelationService">
+			<ref bean="buyrelationServiceI"/>
+		</property>
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+	</bean>
+	
+	
+	<bean id="postAction" class="com.hengshuo.chengszj.action.post.PostAction" scope="prototype">
+		<property name="postService">
+			<ref bean="postServiceI"/>
+		</property>
+		<property name="replyService">
+			<ref bean="replyServiceI"/>
+		</property>
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+	</bean>	
+	
+	<bean id="onlinepaymentAction" class="com.hengshuo.chengszj.action.onlinepayment.OnlinepaymentAction" scope="prototype">
+		<property name="receiptService">
+			<ref bean="receiptServiceI"/>
+		</property>
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+		<property name="onPayService">
+			<ref bean="onlinepaymentServiceI"/>
+		</property>
+	</bean>	
+	
+	<bean id="backsetAction" class="com.hengshuo.chengszj.action.backset.BacksetAction" scope="prototype">
+		<property name="backsetService">
+			<ref bean="backsetServiceI"/>
+		</property>
+		<property name="userService">
+			<ref bean="userServiceI"/>
+		</property>
+		
+		
+	</bean>	
+	
+
+</beans>

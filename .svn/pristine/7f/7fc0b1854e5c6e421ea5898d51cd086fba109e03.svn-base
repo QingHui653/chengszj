@@ -1,0 +1,25 @@
+package com.hengshuo.chengszj.service.impl.freeexpress;
+
+import java.io.Serializable;
+
+import org.apache.log4j.Logger;
+
+import com.hengshuo.chengszj.dao.impl.BaseDao_I;
+import com.hengshuo.chengszj.model.Freeexpress;
+import com.hengshuo.chengszj.service.freeexpress.FreeexpressService;
+import com.hengshuo.chengszj.service.impl.admin.AdminServiceI;
+
+public class FreeexpressServiceI extends BaseDao_I<Freeexpress, Serializable> implements FreeexpressService {
+	private static final Logger log=Logger.getLogger(FreeexpressServiceI.class.getName());
+	
+	public FreeexpressServiceI() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public FreeexpressServiceI(Class<Freeexpress> entityClass) {
+		super(entityClass);
+		// TODO Auto-generated constructor stub
+	}
+
+}

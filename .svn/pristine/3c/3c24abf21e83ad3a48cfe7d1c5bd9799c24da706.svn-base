@@ -1,0 +1,40 @@
+#IP
+ip=192.168.1.102
+
+#Tomcat
+#tomcatPath=/usr/tomcat/webapps/InDigLib/
+tomcatPath=C:/Tomcat 5.0/webapps/InDigLib/
+#tomcatPath=D:/Program Files/Tomcat 5.5/webapps/InDigLib/
+
+
+#New book
+#filepath=/u/indiglib/newbook/
+filepath=d:/u/indiglib/newbook/
+
+#Z39.50
+#Z3950File=/u/indiglib
+Z3950File=d:/u/indiglib
+
+#base
+#basePath=/u/indiglib/
+basePath=d:/u/indiglib/
+
+#Z39.50lib
+#libcode=/u/indiglib/conf/libcode.xml
+libcode=d:/u/indiglib/conf/libcode.xml
+
+#Vartable
+#vartable=/u/indiglib/conf/VarTable.xml
+vartable=d:/u/indiglib/conf/VarTable.xml
+
+#iscard
+iscard=false
+#iscard=true
+
+#web service
+#ws_url=http://61.133.212.214:8090/change?wsdl
+#ws_url=http://localhost:88/dlibsws/TestService.jws?wsdl
+ 
+
+
+

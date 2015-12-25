@@ -1,0 +1,37 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+     <package name="com.hengshuo.chengszj.action.post" extends="json-default">
+  
+     
+     
+      	
+  		<action name="fatie" class="postAction" method="tiezi">
+      		  <result name="OK" type="chain">shequ</result>
+      	</action>  
+      		
+  		<action name="huitie" class="postAction" method="huiTie">
+      		  <result name="OK" type="chain">TieziDetail</result>
+      	</action> 
+      	
+      	<action name="shequ" class="postAction" method="listPost">
+      		  <result name="OK">/web/post/shequ.jsp</result>
+      	</action> 
+      		
+      	<action name="TieziDetail" class="postAction" method="tiezidetail">
+      		  <result name="OK">/web/post/detail.jsp</result>
+      	</action> 
+      	<action name="fatieUI" class="postAction" method="fatieUI">
+      		  <result name="OK">/web/post/fatie.jsp</result>
+      	</action>
+      	
+      	
+   
+   
+      
+        
+        
+        
+     </package>
+ </struts>

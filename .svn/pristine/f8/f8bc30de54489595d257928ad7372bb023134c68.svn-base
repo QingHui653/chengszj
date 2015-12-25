@@ -1,0 +1,840 @@
+package com.hengshuo.chengszj.action.receipt;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.RequestAware;
+import org.aspectj.apache.bcel.generic.AALOAD;
+
+import com.hengshuo.chengszj.action.BaseAction;
+import com.hengshuo.chengszj.common.page.Base64;
+import com.hengshuo.chengszj.common.page.PageSupport;
+import com.hengshuo.chengszj.common.util.Arithmetic4Double;
+import com.hengshuo.chengszj.common.util.BaiduMap;
+import com.hengshuo.chengszj.common.util.DateTimeUtil;
+import com.hengshuo.chengszj.common.util.Define;
+import com.hengshuo.chengszj.common.util.ImageUpload;
+import com.hengshuo.chengszj.common.util.MessageHelper;
+import com.hengshuo.chengszj.model.Buyrelation;
+import com.hengshuo.chengszj.model.Helpmebuy;
+import com.hengshuo.chengszj.model.Integral;
+import com.hengshuo.chengszj.model.Message;
+import com.hengshuo.chengszj.model.Receipt;
+import com.hengshuo.chengszj.model.Singlerelation;
+import com.hengshuo.chengszj.model.User;
+import com.hengshuo.chengszj.service.buyrelation.BuyrelationService;
+import com.hengshuo.chengszj.service.helpmebuy.HelpmebuyService;
+import com.hengshuo.chengszj.service.impl.receipt.ReceiptServiceI;
+import com.hengshuo.chengszj.service.integral.IntegralService;
+import com.hengshuo.chengszj.service.message.MessageService;
+import com.hengshuo.chengszj.service.receipt.ReceiptService;
+import com.hengshuo.chengszj.service.singlerelation.SinglerelationService;
+import com.hengshuo.chengszj.service.user.UserService;
+
+public class ReceiptAction extends BaseAction implements RequestAware {
+	private static final Logger log=Logger.getLogger(ReceiptAction.class.getName());
+	private ReceiptService receiptService;
+	public void setReceiptService(ReceiptService receiptService) {
+		this.receiptService = receiptService;
+	}
+	private UserService userService;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	private HelpmebuyService helpmebuyService;
+	public void setHelpmebuyService(HelpmebuyService helpmebuyService) {
+		this.helpmebuyService = helpmebuyService;
+	}
+	private IntegralService integralService;
+	public void setIntegralService(IntegralService integralService) {
+		this.integralService = integralService;
+	}
+	private SinglerelationService service;
+	public void setService(SinglerelationService service) {
+		this.service = service;
+	}
+	private Integer singleid;
+	public void setSingleid(Integer singleid) {
+		this.singleid = singleid;
+	}
+	private String singleuserid;
+	public void setSingleuserid(String singleuserid) {
+		this.singleuserid = singleuserid;
+	}
+	
+	private SinglerelationService singlerelationService;
+	public void setSinglerelationService(
+			SinglerelationService singlerelationService) {
+		this.singlerelationService = singlerelationService;
+	}
+	private BuyrelationService buyrelationService;
+	public void setBuyrelationService(BuyrelationService buyrelationService) {
+		this.buyrelationService = buyrelationService;
+	}
+	private  MessageService messageService;
+	public void setMessageService(MessageService messageService) {
+		this.messageService = messageService;
+	}
+	
+
+	 private String files;
+	 public void setFiles(String files) {
+		this.files = files;
+	}
+	
+	/**
+	 * 测试
+	 */
+		public  String testvideo(){
+		
+				 String root = ServletActionContext.getServletContext().getRealPath(Define.IMAGES_RECEIPT);
+			       /* FileOutputStream fos = null;
+			        FileInputStream fis = null;*/
+			        try {
+			        	userid="15575842485";
+			        	String  url="/"+userid+DateTimeUtil.toRandom(5)+".amr";
+					 	Base64.GenerateFile(files, root+url);
+					 	log.debug(Define.IMAGES_RECEIPT+url);
+			        	HttpServletRequest request = ServletActionContext.getRequest(); 
+				
+			} catch (Exception e) {
+				log.error(Define.F_MESSAGE+e.getMessage());
+			}
+			
+			return "OK";
+		}
+	
+	
+	/**
+	 * 根据userid查询已被接单，但未发消息的单
+	 */
+	
+	public String findJieDanM(){
+		try {
+			String query="from Receipt where userid=? and status=? and message=? ORDER BY id DESC";
+			Object[] values={userid,Define.RECEIPT_STATUS_Y,"N"};
+			List<Receipt> receipts=receiptService.find(query, values);
+			List<Message> messages=new ArrayList<Message>();
+			for(Receipt R:receipts){
+			String updatString="update Receipt set message='Y' where id="+R.getId();
+			int m=receiptService.bulkUpdate(updatString);
+			if (m<1) {
+				MessageHelper mh = new MessageHelper();
+				mh.setResult(Define.F);
+			/*	mh.setMessage(Define.F_MESSAGE);*/
+			 	   setMessageHelper(mh);
+			 	  return "OK";
+			}else {
+				Singlerelation singlerelation=singlerelationService.findByreceiptid(R.getId());
+				Message message=new Message();
+				String content="您发的派送:"+R.getItemName()+" 已被接取,对方手机号为:"+singlerelation.getUserid()+"接取时间:"+singlerelation.getTime().substring(0, 16);
+				message.setContent(content);
+				message.setUserid(userid);
+				message.setId(R.getId());
+				messages.add(message);
+			}
+		
+		}
+			
+			String query2="from Helpmebuy where userid=? and status=? and message=? ORDER BY id DESC";
+			Object[] values2={userid,Define.HELPMEBUY_STATUS_Y,"N"};
+			List<Helpmebuy> helpmebuys=helpmebuyService.find(query2, values2);
+				for (Helpmebuy H:helpmebuys) {
+					String updatString="update Helpmebuy set message='Y' where id="+H.getId();
+					int m=helpmebuyService.bulkUpdate(updatString);
+					if (m<1) {
+						/*MessageHelper mh = new MessageHelper();
+						mh.setResult(Define.F);
+						mh.setMessage(Define.F_MESSAGE);
+					 	   setMessageHelper(mh);
+					 	  return "OK";*/
+					}else {
+					Buyrelation buyrelation=buyrelationService.findByHelpid(H.getId());
+					Message message=new Message();
+					String content="您发的任务:"+H.getGoodsname()+" 已被接取,对方手机号为:"+buyrelation.getUserid()+"接取时间:"+buyrelation.getTime().substring(0, 16);
+					message.setContent(content);
+					messages.add(message);
+					}
+				}
+			if(messages.size()>0){
+				MessageHelper mh = new MessageHelper();
+				mh.setResult(Define.S);
+				mh.setList(messages);
+		 	   	setMessageHelper(mh);	
+			}else {
+				MessageHelper mh = new MessageHelper();
+				mh.setResult(Define.F);
+		 	   	setMessageHelper(mh);
+			}
+			
+			} catch (Exception e) {
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.F);
+			mh.setMessage(Define.F_MESSAGE);
+		 	   setMessageHelper(mh);
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		
+		return "OK";
+	}
+	
+	
+	
+	/**
+	 * 评价返回json
+	 * @return 
+	 */
+	public String pingJiajson(){
+		try {
+			Receipt receipt=receiptService.get(id);
+			String status2=receipt.getStatus();
+			
+			if (!receipt.getPaymentType().equals("Z")) {
+			if(pingjia.equals(Define.PINGJIA_W)){
+				receipt.setStatus(Define.RECEIPT_STATUS_F);
+			}else {
+				receipt.setStatus(Define.RECEIPT_STATUS_S);
+			}
+			receipt.setPingjia(pingjia);
+			receiptService.saveOrUpdate(receipt);
+			Receipt receipt2=receiptService.get(id);
+			String pjia=receipt2.getPingjia();
+			
+			if (!pjia.equals(Define.PINGJIA_W)) {
+			Singlerelation singlerelation=service.findByreceiptid(id);
+			//Singlerelation singlerelation=	service.get(singleid);
+			singlerelation.setStatus(Define.RELATION_STATUS_W);
+			service.saveOrUpdate(singlerelation);
+			
+			String time=DateTimeUtil.currentDatetime();
+			int integ=3;
+			
+			Integral integral=new Integral();
+			integral.setContent("成功收货，奖励3分");
+			integral.setUserid(receipt.getUserid());
+			integral.setTime(time);
+			integral.setIntegral(integ);
+			integralService.saveOrUpdate(integral);
+			
+			Integral integral2=new Integral();
+			integral2.setContent("成功送达，奖励3分");
+			integral2.setUserid(singlerelation.getUserid());
+			integral2.setTime(time);
+			integral2.setIntegral(integ);
+			integralService.saveOrUpdate(integral2);
+			
+		User user=userService.findUserByUserid(receipt.getUserid()).get(0);
+			int userinteg=user.getIntegral();
+			user.setIntegral(userinteg+integ);
+			userService.saveOrUpdate(user);
+			
+			User user2=userService.findUserByUserid(singlerelation.getUserid()).get(0);
+			int userinteg2=user2.getIntegral();
+			user2.setIntegral(userinteg2+integ);
+			userService.saveOrUpdate(user2);
+			
+			}
+		}else{
+			
+			if(pingjia.equals(Define.PINGJIA_W)&&status2.equals(Define.RECEIPT_STATUS_6)){
+				receipt.setStatus(Define.RECEIPT_STATUS_F);
+				receipt.setPingjia(pingjia);
+			}else {
+				if(status2.equals(Define.RECEIPT_STATUS_6)){
+				receipt.setStatus(Define.RECEIPT_STATUS_S);
+				receipt.setPingjia(pingjia);
+				}
+			}
+			
+			receiptService.saveOrUpdate(receipt);
+			Receipt receipt2=receiptService.get(id);
+			String pjia=receipt2.getPingjia();
+		
+			if (!pjia.equals(Define.PINGJIA_W)&&receipt2.getStatus().equals(Define.RECEIPT_STATUS_S)) {
+			Singlerelation singlerelation=service.findByreceiptid(id);
+			//Singlerelation singlerelation=	service.get(singleid);
+			singlerelation.setStatus(Define.RELATION_STATUS_W);
+			service.saveOrUpdate(singlerelation);
+			
+			String time=DateTimeUtil.currentDatetime();
+			int integ=3;
+			
+			Integral integral=new Integral();
+			integral.setContent("成功收货，奖励3分");
+			integral.setUserid(receipt.getUserid());
+			integral.setTime(time);
+			integral.setIntegral(integ);
+			integralService.saveOrUpdate(integral);
+			
+			Integral integral2=new Integral();
+			integral2.setContent("成功送达，奖励3分");
+			integral2.setUserid(singlerelation.getUserid());
+			integral2.setTime(time);
+			integral2.setIntegral(integ);
+			integralService.saveOrUpdate(integral2);
+			
+		User user=userService.findUserByUserid(receipt.getUserid()).get(0);
+			int userinteg=user.getIntegral();
+			user.setIntegral(userinteg+integ);
+			userService.saveOrUpdate(user);
+			
+			User user2=userService.findUserByUserid(singlerelation.getUserid()).get(0);
+			int userinteg2=user2.getIntegral();
+			user2.setIntegral(userinteg2+integ);
+			Double balance=user2.getBalance();
+			user2.setBalance(Arithmetic4Double.add(balance, receipt.getShippingCost()));
+			userService.saveOrUpdate(user2);
+			/*	if(pingjia.equals(Define.PINGJIA_W)){
+				receipt.setStatus(Define.RECEIPT_STATUS_F);
+			}else {
+				receipt.setStatus(Define.RECEIPT_STATUS_S);
+			}*/
+			/*receipt.setPingjia(pingjia);
+			receiptService.saveOrUpdate(receipt);*/
+			}
+			
+		}
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.S);
+	 	   setMessageHelper(mh);
+			} catch (Exception e) {
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.F);
+			mh.setMessage(Define.F_MESSAGE);
+		 	   setMessageHelper(mh);
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		
+		return "OK";
+	}
+	
+	
+	
+	
+	
+	/**
+	 * 评价
+	 * @return 
+	 */
+	public String pingJia(){
+		try {
+			Receipt receipt=receiptService.get(id);
+			if (!receipt.getPaymentType().equals("Z")) {
+			if(pingjia.equals(Define.PINGJIA_W)){
+				receipt.setStatus(Define.RECEIPT_STATUS_F);
+			}else {
+				receipt.setStatus(Define.RECEIPT_STATUS_S);
+			}
+			receipt.setPingjia(pingjia);
+			receiptService.saveOrUpdate(receipt);
+			Receipt receipt2=receiptService.get(id);
+			String pjia=receipt2.getPingjia();
+			
+			if (!pjia.equals(Define.PINGJIA_W)) {
+			Singlerelation singlerelation=service.findByreceiptid(id);
+			//Singlerelation singlerelation=	service.get(singleid);
+			singlerelation.setStatus(Define.RELATION_STATUS_W);
+			service.saveOrUpdate(singlerelation);
+			
+			String time=DateTimeUtil.currentDatetime();
+			int integ=3;
+			
+			Integral integral=new Integral();
+			integral.setContent("成功收货，奖励3分");
+			integral.setUserid(receipt.getUserid());
+			integral.setTime(time);
+			integral.setIntegral(integ);
+			integralService.saveOrUpdate(integral);
+			
+			Integral integral2=new Integral();
+			integral2.setContent("成功送达，奖励3分");
+			integral2.setUserid(singlerelation.getUserid());
+			integral2.setTime(time);
+			integral2.setIntegral(integ);
+			integralService.saveOrUpdate(integral2);
+			
+		User user=userService.findUserByUserid(receipt.getUserid()).get(0);
+			int userinteg=user.getIntegral();
+			user.setIntegral(userinteg+integ);
+			userService.saveOrUpdate(user);
+			
+			User user2=userService.findUserByUserid(singlerelation.getUserid()).get(0);
+			int userinteg2=user2.getIntegral();
+			user2.setIntegral(userinteg2+integ);
+			userService.saveOrUpdate(user2);
+			
+			}
+		}else{
+		/*	if(pingjia.equals(Define.PINGJIA_W)){
+				receipt.setStatus(Define.RECEIPT_STATUS_F);
+			}else {
+				receipt.setStatus(Define.RECEIPT_STATUS_S);
+			}*/
+			receipt.setPingjia(pingjia);
+			receiptService.saveOrUpdate(receipt);
+		}
+			
+		} catch (Exception e) {
+		/*	MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.F);
+			mh.setMessage(Define.F_MESSAGE);
+		 	   setMessageHelper(mh);*/
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		
+		return "OK";
+	}
+	/**
+	 * 取消界面
+	 */
+	public String quxiaoUI(){
+		try {
+			request.put("userid",userid);
+			request.put("id",id);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return  "OK";
+	}
+
+	/**
+	 * 评价页面
+	 * @return 
+	 */
+	public String pinjiaUI(){
+		try {
+			request.put("userid",userid);
+			request.put("id",id);
+		} catch (Exception e) {
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.F);
+			mh.setMessage(Define.F_MESSAGE);
+		 	   setMessageHelper(mh);
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		return "OK";
+	}
+	
+	
+	/**
+	 * 我的发单 帮我送JSON
+	 * @return 
+	 */
+	public  String jsonMyFaDan(){
+		try {
+			String query="from Receipt where userid=? ORDER BY id DESC";
+			Object[] values={userid};
+			List<Receipt> receipts2=receiptService.find(query, values);
+			List<Receipt> receipts=new ArrayList<Receipt>();
+		for (Receipt s:receipts2) {
+			List<Singlerelation> b=service.Byreceiptid(s.getId());
+			if (b.size()>0) {
+				s.setTime(b.get(0).getTime());
+				s.setUserid(b.get(0).getUserid());
+			}else {
+				s.setTime(null);
+				s.setUserid(null);
+			}
+		
+			receipts.add(s);
+		}
+		request.put("userid",userid);
+		//List<Receipt> receiptss=BaiduMap.getRejuli(receipts);
+	//request.put("receipts", receiptss);
+	MessageHelper mh = new MessageHelper();
+		mh.setResult(Define.S);
+		mh.setList(receipts);
+		
+	 	  setMessageHelper(mh);
+		} catch (Exception e) {
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.F);
+			mh.setMessage(Define.F_MESSAGE);
+		 	   setMessageHelper(mh);
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		return  "OK";
+	}
+	
+	
+	
+	
+	/**
+	 * 我的发单 帮我送
+	 * @return 
+	 */
+	public  String myFaDan(){
+		try {
+			String query="from Receipt where userid=? ORDER BY id DESC";
+			Object[] values={userid};
+			List<Receipt> receipts2=receiptService.find(query, values);
+			List<Receipt> receipts=new ArrayList<Receipt>();
+		for (Receipt s:receipts2) {
+			List<Singlerelation> b=service.Byreceiptid(s.getId());
+			if (b.size()>0) {
+				s.setTime(b.get(0).getTime());
+				s.setUserid(b.get(0).getUserid());
+			}else {
+				s.setTime(null);
+				s.setUserid(null);
+			}
+		
+			receipts.add(s);
+		}
+		request.put("userid",userid);
+		List<Receipt> receiptss=BaiduMap.getRejuli(receipts);
+	request.put("receipts", receiptss);
+	//	MessageHelper mh = new MessageHelper();
+		//mh.setResult(Define.S);
+		//mh.setList(receipts);
+		
+	 	 //  setMessageHelper(mh);
+		} catch (Exception e) {
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.F);
+			mh.setMessage(Define.F_MESSAGE);
+		 	   setMessageHelper(mh);
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		return  "OK";
+	}
+	
+	
+	/**
+	 * 帮我送单
+	 * @return 
+	 */
+	public String listReceipt(){
+		try {
+			
+			String query="from Receipt where status=? and currentCity=? ORDER BY id DESC";
+			Object[] values={Define.RECEIPT_STATUS_W,new String(currentCity.getBytes("iso8859-1"), "utf-8")};
+			List<Receipt> receipts	=receiptService.find(query, values);
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.S);
+			mh.setList(receipts);
+			setMessageHelper(mh);
+			
+		} catch (Exception e) {
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.F);
+			mh.setMessage(Define.F_MESSAGE);
+		 	   setMessageHelper(mh);
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		
+		return "OK";
+	}
+	
+	
+
+	
+	
+
+	/**
+	 * 添加帮我送
+	 * @return 
+	 */
+	public String addReceipt(){
+		try {
+			Receipt receipt=new Receipt();
+			receipt.setUserid(userid);
+			receipt.setPickupTime(pickupTime);
+			receipt.setItemType(itemType);
+			receipt.setItemName(itemName);
+			receipt.setItemWeight(itemWeight);
+			receipt.setItemValue(itemValue);
+			receipt.setVehicle(vehicle);
+			receipt.setCurrentCity(currentCity);
+			receipt.setDeliveryPlace(deliveryPlace);
+			receipt.setReceivingLand(receivingLand);
+			receipt.setShippingCost(shippingCost);
+			receipt.setFinishTime(finishTime);
+			receipt.setShipper(shipper);
+			receipt.setShipperPhone(shipperPhone);
+			receipt.setJingwei(jingwei);
+			receipt.setConsignee(consignee);
+			receipt.setConsigneePhone(consigneePhone);
+			receipt.setPaymentType(paymentType);
+			receipt.setIdCard(idCard);
+			receipt.setTextExplain(textExplain);
+		//	receipt.setVoiceExplain(voiceExplain);
+			if (voiceExplain!=null) {
+				 String root = ServletActionContext.getServletContext().getRealPath(Define.IMAGES_RECEIPT);
+				 	String  url="/"+userid+DateTimeUtil.toRandom(5)+".amr";
+				 	Base64.GenerateFile(voiceExplain, root+url);
+				 	receipt.setVoiceExplain(Define.IMAGES_RECEIPT+url);
+			}
+			
+			
+			receipt.setMessage("N");
+			receipt.setStatus(Define.RECEIPT_STATUS_W);
+			receipt.setType(type);
+			receipt.setCompany(company);
+			
+			String time=DateTimeUtil.currentDatetime();
+			receipt.setTime(time);
+			
+			if(itemPhoto!=null){
+				/*String url=ImageUpload.imageupload(itemPhoto, Define.IMAGES_RECEIPT, userid,"Receipt");
+				*/
+			String url=ImageUpload.duoGeImage(itemPhoto, Define.IMAGES_RECEIPT, userid);
+				receipt.setItemPhoto(url);
+			}
+			receiptService.save(receipt);
+			
+			Message message=new Message();
+			message.setContent("恭喜你成功发单帮我送,订单名称("+itemName+")");
+			message.setTime(time);
+			message.setUserid(userid);
+			messageService.save(message);
+			
+		
+		List<Receipt> receipts=	receiptService.findReceipts(userid, time);
+		Receipt receipt2=receipts.get(0);
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.S);
+			mh.setEntity(receipt2);
+		 	   setMessageHelper(mh);
+			
+		} catch (Exception e) {
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.F);
+			mh.setMessage("发货失败");
+		 	   setMessageHelper(mh);
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		return "OK";
+	}
+	/**
+	 * @param id 订单ID
+	 *  @param cancel 取消原因
+	 * 取消帮我送订单UI
+	 * @return 
+	 */
+	
+	public String quxiao(){
+		try {
+			Receipt receipt=receiptService.get(id);
+			receipt.setStatus(Define.RECEIPT_STATUS_Q);
+			receipt.setCancel(cancel);
+			receiptService.saveOrUpdate(receipt);
+			//request.put("userid",userid);
+		} catch (Exception e) {
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		return "OK";
+	}
+	
+	
+	/**
+	 * @param id 订单ID
+	 *  @param cancel 取消原因
+	 * 取消帮我送订单
+	 * @return 
+	 */
+	public String quXiaoReceipt(){
+		try {
+		Receipt receipt=receiptService.get(id);
+		receipt.setStatus(Define.RECEIPT_STATUS_Q);
+		receipt.setCancel(new String(cancel.getBytes("iso8859-1"), "utf-8"));
+		receiptService.saveOrUpdate(receipt);
+		
+		MessageHelper mh = new MessageHelper();
+		mh.setResult(Define.S);
+	 	   setMessageHelper(mh);
+		} catch (Exception e) {
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.F);
+			mh.setMessage("取消失败");
+		 	   setMessageHelper(mh);
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		return "OK";
+	}
+	
+	/**
+	 * @param id 订单ID
+	 * 订单详情
+	 * @return  页面
+	 */
+	public String uiDetail(){
+		try {
+			Receipt receipt=receiptService.get(id);
+			request.put("receipt",receipt);
+		/*	request.put("userid",userid);*/
+			
+		} catch (Exception e) {
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		return "OK";
+	}
+	
+	
+	/**
+	 * @param id 订单ID
+	 * 订单详情
+	 * @return 
+	 */
+	public String detail(){
+		try {
+	Receipt receipt=	receiptService.get(id);
+	MessageHelper mh = new MessageHelper();
+	mh.setResult(Define.S);
+	mh.setEntity(receipt);
+ 	   setMessageHelper(mh);
+		} catch (Exception e) {
+			MessageHelper mh = new MessageHelper();
+			mh.setResult(Define.F);
+			mh.setMessage(Define.F_MESSAGE);
+		 	   setMessageHelper(mh);
+			log.error(Define.F_MESSAGE+e.getMessage());
+		}
+		
+		return "OK";
+	}
+	
+
+	
+	private Integer id;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public void setPickupTime(String pickupTime) {
+		this.pickupTime = pickupTime;
+	}
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+	public void setItemWeight(Double itemWeight) {
+		this.itemWeight = itemWeight;
+	}
+	public void setItemValue(Integer itemValue) {
+		this.itemValue = itemValue;
+	}
+	public void setVehicle(String vehicle) {
+		this.vehicle = vehicle;
+	}
+	public void setCurrentCity(String currentCity) {
+		this.currentCity = currentCity;
+	}
+	public void setDeliveryPlace(String deliveryPlace) {
+		this.deliveryPlace = deliveryPlace;
+	}
+	public void setReceivingLand(String receivingLand) {
+		this.receivingLand = receivingLand;
+	}
+	public void setShippingCost(Double shippingCost) {
+		this.shippingCost = shippingCost;
+	}
+	public void setFinishTime(String finishTime) {
+		this.finishTime = finishTime;
+	}
+	public void setShipper(String shipper) {
+		this.shipper = shipper;
+	}
+	public void setShipperPhone(String shipperPhone) {
+		this.shipperPhone = shipperPhone;
+	}
+	public void setConsignee(String consignee) {
+		this.consignee = consignee;
+	}
+	public void setConsigneePhone(String consigneePhone) {
+		this.consigneePhone = consigneePhone;
+	}
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+	public void setTextExplain(String textExplain) {
+		this.textExplain = textExplain;
+	}
+	public void setVoiceExplain(String voiceExplain) {
+		this.voiceExplain = voiceExplain;
+	}
+	public void setItemPhoto(String itemPhoto) {
+		this.itemPhoto = itemPhoto;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public void setPingjia(String pingjia) {
+		this.pingjia = pingjia;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	public void setCancel(String cancel) {
+		this.cancel = cancel;
+	}
+	private String pickupTime;
+	private String itemType;
+	private String itemName;
+	private Double itemWeight;
+	private Integer itemValue;
+	private String vehicle;
+	private String currentCity;
+	private String deliveryPlace;
+	private String receivingLand;
+	private Double shippingCost;
+	private String finishTime;
+	private String shipper;
+	private String shipperPhone;
+	private String consignee;
+	private String consigneePhone;
+	private String paymentType;
+	private String idCard;
+	private String textExplain;
+	private String voiceExplain;
+	private String itemPhoto;
+	private String status;
+	private String type;
+	private String company;
+	private String pingjia;
+	private String userid;
+	private String cancel;
+	private String jingwei;
+	private String message;
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public void setJingwei(String jingwei) {
+		this.jingwei = jingwei;
+	}
+	 private MessageHelper messageHelper;
+	 public MessageHelper getMessageHelper() {
+		return messageHelper;
+	}
+	 public void setMessageHelper(MessageHelper messageHelper) {
+		this.messageHelper = messageHelper;
+	}
+
+	 	private Map<String , Object> request;
+	@Override
+	public void setRequest(Map arg0) {
+		// TODO Auto-generated method stub
+		this.request=arg0;
+	}
+	
+}

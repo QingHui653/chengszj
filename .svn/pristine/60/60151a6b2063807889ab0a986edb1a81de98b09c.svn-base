@@ -1,0 +1,50 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+   <struts>
+     <package name="com.hengshuo.chengszj.action.backset" extends="json-default">
+  	 	<!-- 快递公司列表-->
+  	 
+  	 <action name="findExpress" class="backsetAction" method="findExpress">
+      		  <result name="OK" type="json"></result>
+      </action> 
+      
+      		<!-- 附近多少人-->
+      	<action name="findNumber" class="backsetAction" method="findNumber">
+      		  <result name="OK" type="json"></result>
+      	</action>
+      	<!-- 获取价格 -->
+  		 <action name="findPrice" class="backsetAction" method="findPrice">
+      		  <result name="OK" type="json"></result>
+      	</action>
+   
+      	<!-- 后台城市列表 -->
+        <action name="cityManage" class="backsetAction" method="cityManage">
+      		  <result name="OK">/web/admin/city/listCity.jsp</result>
+      	</action>
+      	<!-- 修改城市 -->
+      	<action name="updateCity" class="backsetAction" method="updateCity">
+      		  <result name="OK" type="chain">cityManage</result>
+      	</action>
+      	<!-- 进入添加页面 -->
+      	<action name="addCityUI" class="backsetAction" method="addCityUI">
+      		  <result name="C">/web/admin/city/addCity.jsp</result>
+      	</action>
+      	
+      	<!-- 详情 -->
+      	<action name="cityDetail" class="backsetAction" method="cityDetail">
+      		  <result name="C">/web/admin/city/Citydetail.jsp</result>
+      	</action>
+      	<!-- 添加城市 -->
+      	<action name="addCity" class="backsetAction" method="addCity">
+      		  <result name="OK" type="chain">cityManage</result>
+      	</action>
+      	
+        <action name="backsetPrice" class="backsetAction" method="backsetPrice">
+      		  <result name="C">/web/admin/city/Pricedetail.jsp</result>
+      	</action>
+        
+        
+        
+     </package>
+ </struts>

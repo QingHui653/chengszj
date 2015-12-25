@@ -1,0 +1,10 @@
+package com.hengshuo.chengszj.service.freeexpress;
+
+import java.io.Serializable;
+
+import com.hengshuo.chengszj.dao.BaseDao_S;
+import com.hengshuo.chengszj.model.Freeexpress;
+
+public interface FreeexpressService extends BaseDao_S<Freeexpress, Serializable> {
+
+}
